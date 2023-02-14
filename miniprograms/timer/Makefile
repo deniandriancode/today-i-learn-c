@@ -4,6 +4,15 @@ TARGET_EXEC := timer
 BUILD_DIR := ./build
 SRC_DIRS := ./src
 
+# default compiler
+CC = gcc
+
+# additional C flags
+CFLAGS = -O2 -Wall
+
+# additional linked library
+# LDFLAGS = -lpthread
+
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. Make will incorrectly expand these otherwise.
 SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
@@ -28,6 +37,9 @@ CPPFLAGS := $(INC_FLAGS) -MMD -MP
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
+
+run: $(BUILD_DIR)/$(TARGET_EXEC)
+	./build/$(TARGET_EXEC)
 
 # Build step for C source
 $(BUILD_DIR)/%.c.o: %.c
